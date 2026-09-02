@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#0B172B" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>Veer &amp; Zara</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body class="locked">
+    <div id="page" class="page">
+      <section id="intro" class="hero">
+        <video
+          id="envelope-video"
+          class="hero__video hero__video--envelope"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+          muted
+          disablepictureinpicture
+          controlslist="nodownload nofullscreen noremoteplayback"
+        >
+          <source src="assets/intro.mp4" type="video/mp4" />
+        </video>
+        <video
+          id="loop-video"
+          class="hero__video hero__video--loop"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+          muted
+          loop
+          disablepictureinpicture
+          controlslist="nodownload nofullscreen noremoteplayback"
+        >
+          <source src="assets/intro-2.mp4" type="video/mp4" />
+        </video>
+        <audio id="bgm" src="assets/bgm-new.mp3" loop preload="auto" playsinline></audio>
+        <audio id="wedding-song" src="assets/wedding-song.mp3" loop preload="auto" playsinline></audio>
+      </section>
+
+      <section class="welcome" id="welcome">
+        <div class="welcome__divider" aria-hidden="true">
+          <span></span>
+          <span class="welcome__heart">❤</span>
+          <span></span>
+        </div>
+        <p class="welcome__text">
+          We are honored to welcome you to the Wedding ceremony of Shivam &amp; Ananya
+          As they begin their journey together in faith and love, we thank you for
+          being part of this blessed occasion
+        </p>
+      </section>
+
+      <section class="save-date" id="save-date">
+        <h2 class="save-date__title">Save The Date</h2>
+        <p class="save-date__prompt">Some dates are meant to be remembered forever</p>
+
+        <div class="save-date__row">
+          <article class="scratch-card">
+            <p class="scratch-card__label">Day</p>
+            <div class="scratch-card__box">
+              <span class="scratch-card__value">1</span>
+              <canvas class="scratch-card__foil" aria-label="Scratch to reveal the day"></canvas>
+            </div>
+          </article>
+
+          <article class="scratch-card">
+            <p class="scratch-card__label">Month</p>
+            <div class="scratch-card__box">
+              <span class="scratch-card__value">Dec</span>
+              <canvas class="scratch-card__foil" aria-label="Scratch to reveal the month"></canvas>
+            </div>
+          </article>
+
+          <article class="scratch-card scratch-card--year">
+            <p class="scratch-card__label">Year</p>
+            <div class="scratch-card__box">
+              <span class="scratch-card__value">2026</span>
+              <canvas class="scratch-card__foil" aria-label="Scratch to reveal the year"></canvas>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="countdown" id="countdown">
+        <article class="countdown__card">
+          <span class="countdown__corner countdown__corner--tl" aria-hidden="true"></span>
+          <span class="countdown__corner countdown__corner--tr" aria-hidden="true"></span>
+          <span class="countdown__corner countdown__corner--bl" aria-hidden="true"></span>
+          <span class="countdown__corner countdown__corner--br" aria-hidden="true"></span>
+          <p class="countdown__eyebrow">The moments are counting down until we begin this beautiful journey together</p>
+          <h2 class="countdown__title">Until Our Forever Begins</h2>
+          <div class="countdown__sacred" aria-hidden="true">
+            <span></span>
+            <span class="countdown__lotus"></span>
+            <span></span>
+          </div>
+          <div class="countdown__time" aria-live="polite">
+            <p class="countdown__digits">
+              <span data-unit="days">00</span>
+              <span class="countdown__colon">:</span>
+              <span data-unit="hours">00</span>
+              <span class="countdown__colon">:</span>
+              <span data-unit="minutes">00</span>
+              <span class="countdown__colon">:</span>
+              <span data-unit="seconds">00</span>
+            </p>
+            <p class="countdown__words">days · hours · minutes · seconds</p>
+          </div>
+        </article>
+      </section>
+
+      <section class="story" id="story">
+        <header class="story__head">
+          <p class="story__eyebrow">Our Story</p>
+          <h2 class="story__title">How It All Began</h2>
+        </header>
+
+        <div class="story__track" id="story-track">
+          <div class="story__stage">
+            <div class="story__deck">
+              <figure class="polaroid polaroid--1" data-story-card>
+                <img src="assets/photo-1.png" alt="Together" />
+              </figure>
+              <figure class="polaroid polaroid--2" data-story-card>
+                <img src="assets/photo-2.png" alt="Akash and Ananya" />
+              </figure>
+              <figure class="polaroid polaroid--3" data-story-card>
+                <img src="assets/photo-3.png" alt="Akash and Ananya illustration" />
+              </figure>
+              <figure class="polaroid polaroid--4" data-story-card>
+                <img src="assets/scene.jpg" alt="A view from our story" />
+              </figure>
+            </div>
+            <p class="story__hint is-visible" id="story-hint" aria-hidden="true">
+              <span class="story__hint-label">Scroll</span>
+              <span class="story__hint-arrow"></span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="rites" id="rites" data-theme="night">
+        <header class="rites__head">
+          <p class="rites__kicker">The celebrations begin</p>
+          <h2 class="rites__title">The Wedding</h2>
+          <p class="rites__sub">Colour, blessings, and every function that carries us to forever</p>
+        </header>
+      </section>
+
+      <section class="ceremony" id="mehendi" data-theme="mehendi">
+        <p class="ceremony__eyebrow">The Wedding</p>
+        <h2 class="ceremony__title">Mehendi</h2>
+        <figure class="ceremony__media">
+          <video
+            id="mehndi-video"
+            class="ceremony__video"
+            data-ceremony-video="mehendi"
+            playsinline
+            webkit-playsinline
+            muted
+            loop
+            preload="auto"
+            disablepictureinpicture
+            controlslist="nodownload nofullscreen noremoteplayback"
+            aria-label="Mehendi ceremony"
+          >
+            <source src="assets/mehndi.mp4" type="video/mp4" />
+          </video>
+        </figure>
+        <div class="ceremony__details">
+          <p class="ceremony__kind">Ceremony</p>
+          <p class="ceremony__when">29 November, 2026 · 7:00 PM onwards</p>
+          <p class="ceremony__venue">At Home</p>
+          <p class="ceremony__place">No 5, Block K, Gopal Nagar, Fateh Nagar, New Delhi, Delhi, 110018</p>
+        </div>
+      </section>
+
+      <section class="ceremony" id="ring" data-theme="ring">
+        <p class="ceremony__eyebrow">The Wedding</p>
+        <h2 class="ceremony__title">Ring Ceremony</h2>
+        <figure class="ceremony__media">
+          <video
+            class="ceremony__video"
+            data-ceremony-video="ring"
+            playsinline
+            webkit-playsinline
+            muted
+            loop
+            preload="auto"
+            disablepictureinpicture
+            controlslist="nodownload nofullscreen noremoteplayback"
+            aria-label="Ring ceremony"
+          >
+            <source src="assets/ring-ceremony.mp4" type="video/mp4" />
+          </video>
+        </figure>
+        <div class="ceremony__details">
+          <p class="ceremony__kind">Sagai</p>
+          <p class="ceremony__when">30 November, 2026 · 7:00 PM onwards</p>
+          <p class="ceremony__venue">The Florence Banquet Hall</p>
+          <p class="ceremony__place">26 Shivaji Marg, Najafgarh Rd, New Delhi, Delhi 110015</p>
+        </div>
+      </section>
+
+      <section class="ceremony" id="haldi" data-theme="haldi">
+        <p class="ceremony__eyebrow">The Wedding</p>
+        <h2 class="ceremony__title">Haldi</h2>
+        <figure class="ceremony__media">
+          <video
+            class="ceremony__video"
+            data-ceremony-video="haldi"
+            playsinline
+            webkit-playsinline
+            muted
+            loop
+            preload="auto"
+            disablepictureinpicture
+            controlslist="nodownload nofullscreen noremoteplayback"
+            aria-label="Haldi ceremony"
+          >
+            <source src="assets/haldi.mp4" type="video/mp4" />
+          </video>
+        </figure>
+        <div class="ceremony__details">
+          <p class="ceremony__kind">Ceremony</p>
+          <p class="ceremony__when">1 December, 2026 · 10:00 AM onwards</p>
+          <p class="ceremony__venue">At Home</p>
+          <p class="ceremony__place">No 5, Block K, Gopal Nagar, Fateh Nagar, New Delhi, Delhi, 110018</p>
+        </div>
+      </section>
+
+      <section class="ceremony" id="serabandhi" data-theme="serabandhi">
+        <p class="ceremony__eyebrow">The Wedding</p>
+        <h2 class="ceremony__title">Serabandhi</h2>
+        <figure class="ceremony__media">
+          <video
+            class="ceremony__video"
+            data-ceremony-video="serabandhi"
+            playsinline
+            webkit-playsinline
+            muted
+            loop
+            preload="auto"
+            disablepictureinpicture
+            controlslist="nodownload nofullscreen noremoteplayback"
+            aria-label="Serabandhi ceremony"
+          >
+            <source src="assets/sehrabandi.mp4" type="video/mp4" />
+          </video>
+        </figure>
+        <div class="ceremony__details">
+          <p class="ceremony__kind">Sehra Bandi</p>
+          <p class="ceremony__when">1 December, 2026 · 5:00 PM onwards</p>
+          <p class="ceremony__venue">At Home</p>
+          <p class="ceremony__place">No 5, Block K, Gopal Nagar, Fateh Nagar, New Delhi, Delhi, 110018</p>          
+        </div>
+      </section>
+
+      <section class="ceremony" id="barat" data-theme="barat">
+        <p class="ceremony__eyebrow">The Wedding</p>
+        <h2 class="ceremony__title">Departure of Barat</h2>
+        <figure class="ceremony__media">
+          <video
+            class="ceremony__video"
+            data-ceremony-video="barat"
+            playsinline
+            webkit-playsinline
+            muted
+            loop
+            preload="auto"
+            disablepictureinpicture
+            controlslist="nodownload nofullscreen noremoteplayback"
+            aria-label="Departure of Barat"
+          >
+            <source src="assets/barat.mp4" type="video/mp4" />
+          </video>
+        </figure>
+        <div class="ceremony__details">
+          <p class="ceremony__kind">Baraat</p>
+          <p class="ceremony__when">1 December, 2026 · 6:00 PM onwards</p>
+          <p class="ceremony__venue">At Home</p>
+        </div>
+      </section>
+
+      <section class="ceremony ceremony--last" id="vows" data-theme="vows">
+        <p class="ceremony__eyebrow">The Wedding</p>
+        <h2 class="ceremony__title">Vows</h2>
+        <figure class="ceremony__media">
+          <video
+            class="ceremony__video"
+            data-ceremony-video="vows"
+            playsinline
+            webkit-playsinline
+            muted
+            loop
+            preload="auto"
+            disablepictureinpicture
+            controlslist="nodownload nofullscreen noremoteplayback"
+            aria-label="Pheras"
+          >
+            <source src="assets/phere.mp4" type="video/mp4" />
+          </video>
+        </figure>
+        <div class="ceremony__details">
+          <p class="ceremony__kind">Pheras</p>
+          <p class="ceremony__when">1 December, 2026 · 4:00 AM</p>
+          <p class="ceremony__venue">Velora Banquet</p>
+          <p class="ceremony__place">27, Shivaji Marg, opp. DLF Capital Greens, Moti Nagar, Block C, Najafgarh Road Industrial Area, Delhi, 110015</p>
+        </div>
+      </section>
+    </div>
+
+    <div id="scroll-hint" class="scroll-hint" aria-hidden="true">
+      <span class="scroll-hint__label">Scroll</span>
+      <span class="scroll-hint__track">
+        <span class="scroll-hint__dot"></span>
+      </span>
+    </div>
+
+    <canvas id="shower" class="shower" aria-hidden="true"></canvas>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>
