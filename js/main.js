@@ -7,6 +7,8 @@ const weddingSong = document.getElementById("wedding-song");
 const welcome = document.getElementById("welcome");
 const scrollHint = document.getElementById("scroll-hint");
 const showerCanvas = document.getElementById("shower");
+const skipIntro = document.getElementById("skip-intro");
+const rites = document.getElementById("rites");
 
 const TOTAL_CARDS = document.querySelectorAll(".scratch-card__foil").length;
 let revealedCount = 0;
@@ -14,6 +16,7 @@ let celebrating = false;
 
 let started = false;
 let unlocked = false;
+let skippingIntro = false;
 
 function showFirstFrame() {
   if (video.readyState >= 2) {
@@ -51,6 +54,16 @@ function settleNudge(nudge) {
 
   window.addEventListener("scroll", hideScrollHint, { once: true, passive: true });
   window.addEventListener("touchmove", hideScrollHint, { once: true, passive: true });
+}
+
+function unlockPageImmediate() {
+  unlocked = true;
+  page.style.transition = "none";
+  page.style.transform = "";
+  document.body.classList.remove("locked");
+  welcome.classList.add("is-visible");
+  hideScrollHint();
+  revealWelcomeOnScroll();
 }
 
 function unlockPage() {
@@ -101,7 +114,8 @@ function keepBgmPlaying() {
   bgm.play().catch(() => {});
 }
 
-async function startLoopVideo() {
+async function startLoopVideo(options = {}) {
+  intro.classList.remove("is-intro-playing");
   intro.classList.add("is-looping");
 
   if (loopVideo) {
@@ -115,7 +129,26 @@ async function startLoopVideo() {
   }
 
   keepBgmPlaying();
-  unlockPage();
+  if (options.immediate) {
+    unlockPageImmediate();
+  } else {
+    unlockPage();
+  }
+}
+
+async function skipToWedding(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  if (skippingIntro || intro.classList.contains("is-looping")) return;
+  skippingIntro = true;
+  started = true;
+  video.pause();
+  await startBgm();
+  await startLoopVideo({ immediate: true });
+
+  window.requestAnimationFrame(() => {
+    rites?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 }
 
 async function openEnvelope() {
@@ -135,13 +168,23 @@ async function openEnvelope() {
 }
 
 video.addEventListener("loadeddata", showFirstFrame);
-video.addEventListener("playing", keepBgmPlaying);
+video.addEventListener("playing", () => {
+  keepBgmPlaying();
+  if (!intro.classList.contains("is-looping")) {
+    intro.classList.add("is-intro-playing");
+  }
+});
 video.addEventListener("ended", startLoopVideo);
 if (loopVideo) {
   loopVideo.addEventListener("playing", keepBgmPlaying);
 }
 
 intro.addEventListener("pointerup", openEnvelope);
+if (skipIntro) {
+  skipIntro.addEventListener("pointerdown", (event) => event.stopPropagation());
+  skipIntro.addEventListener("pointerup", skipToWedding);
+  skipIntro.addEventListener("click", (event) => event.stopPropagation());
+}
 
 function paintFoil(ctx, width, height) {
   const wash = ctx.createLinearGradient(0, 0, width, height);

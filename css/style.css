@@ -159,6 +159,50 @@ body.locked {
   opacity: 1;
 }
 
+.skip-intro {
+  position: absolute;
+  z-index: 4;
+  right: calc(0.85rem + env(safe-area-inset-right));
+  left: auto;
+  bottom: calc(1.15rem + env(safe-area-inset-bottom));
+  transform: translateY(6px);
+  opacity: 0;
+  pointer-events: none;
+  padding: 0.38rem 0.62rem;
+  border: 1px solid rgba(216, 189, 122, 0.45);
+  border-radius: 999px;
+  background: rgba(11, 23, 43, 0.42);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--ivory);
+  font-family: "Cinzel", "Cormorant Garamond", serif;
+  font-size: 0.5rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.45s ease, transform 0.45s ease, background 0.25s ease;
+  white-space: nowrap;
+}
+
+.hero.is-intro-playing .skip-intro {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.hero.is-looping .skip-intro {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.skip-intro:hover,
+.skip-intro:focus-visible {
+  background: rgba(11, 23, 43, 0.7);
+  outline: none;
+}
+
 .welcome {
   position: relative;
   z-index: 1;
@@ -984,6 +1028,10 @@ body.theme-festive .rites::before {
     animation: none;
     top: 16px;
     opacity: 0.9;
+  }
+
+  .skip-intro {
+    transition: none;
   }
 
   .story__hint-arrow {
