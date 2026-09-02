@@ -5,10 +5,10 @@ const loopVideo = document.getElementById("loop-video");
 const bgm = document.getElementById("bgm");
 const weddingSong = document.getElementById("wedding-song");
 const welcome = document.getElementById("welcome");
+const skipIntro = document.getElementById("skip-intro");
+const weddingSection = document.getElementById("rites");
 const scrollHint = document.getElementById("scroll-hint");
 const showerCanvas = document.getElementById("shower");
-const skipIntro = document.getElementById("skip-intro");
-const rites = document.getElementById("rites");
 
 const TOTAL_CARDS = document.querySelectorAll(".scratch-card__foil").length;
 let revealedCount = 0;
@@ -16,7 +16,7 @@ let celebrating = false;
 
 let started = false;
 let unlocked = false;
-let skippingIntro = false;
+let looping = false;
 
 function showFirstFrame() {
   if (video.readyState >= 2) {
@@ -54,16 +54,6 @@ function settleNudge(nudge) {
 
   window.addEventListener("scroll", hideScrollHint, { once: true, passive: true });
   window.addEventListener("touchmove", hideScrollHint, { once: true, passive: true });
-}
-
-function unlockPageImmediate() {
-  unlocked = true;
-  page.style.transition = "none";
-  page.style.transform = "";
-  document.body.classList.remove("locked");
-  welcome.classList.add("is-visible");
-  hideScrollHint();
-  revealWelcomeOnScroll();
 }
 
 function unlockPage() {
@@ -114,8 +104,30 @@ function keepBgmPlaying() {
   bgm.play().catch(() => {});
 }
 
-async function startLoopVideo(options = {}) {
-  intro.classList.remove("is-intro-playing");
+function showSkipIntro() {
+  if (!skipIntro) return;
+  skipIntro.hidden = false;
+  skipIntro.removeAttribute("aria-hidden");
+  skipIntro.tabIndex = 0;
+}
+
+function hideSkipIntro() {
+  if (!skipIntro) return;
+  skipIntro.hidden = true;
+  skipIntro.setAttribute("aria-hidden", "true");
+  skipIntro.tabIndex = -1;
+}
+
+function goToWeddingSection() {
+  if (!weddingSection) return;
+  hideScrollHint();
+  weddingSection.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+async function startLoopVideo() {
+  if (looping) return;
+  looping = true;
+  hideSkipIntro();
   intro.classList.add("is-looping");
 
   if (loopVideo) {
@@ -129,31 +141,14 @@ async function startLoopVideo(options = {}) {
   }
 
   keepBgmPlaying();
-  if (options.immediate) {
-    unlockPageImmediate();
-  } else {
-    unlockPage();
-  }
-}
-
-async function skipToWedding(event) {
-  event.preventDefault();
-  event.stopPropagation();
-  if (skippingIntro || intro.classList.contains("is-looping")) return;
-  skippingIntro = true;
-  started = true;
-  video.pause();
-  await startBgm();
-  await startLoopVideo({ immediate: true });
-
-  window.requestAnimationFrame(() => {
-    rites?.scrollIntoView({ behavior: "smooth", block: "start" });
-  });
+  unlockPage();
 }
 
 async function openEnvelope() {
   if (started) return;
   started = true;
+  intro.classList.add("is-playing");
+  showSkipIntro();
 
   await startBgm();
 
@@ -167,23 +162,41 @@ async function openEnvelope() {
   keepBgmPlaying();
 }
 
+async function skipToWedding(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  if (intro.classList.contains("is-looping")) return;
+
+  started = true;
+  intro.classList.add("is-playing");
+  hideSkipIntro();
+  video.pause();
+
+  await startBgm();
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const alreadyUnlocked = unlocked;
+  await startLoopVideo();
+
+  const delay = alreadyUnlocked || reducedMotion ? 80 : 1580;
+  window.setTimeout(goToWeddingSection, delay);
+}
+
 video.addEventListener("loadeddata", showFirstFrame);
-video.addEventListener("playing", () => {
-  keepBgmPlaying();
-  if (!intro.classList.contains("is-looping")) {
-    intro.classList.add("is-intro-playing");
-  }
-});
+video.addEventListener("playing", keepBgmPlaying);
 video.addEventListener("ended", startLoopVideo);
 if (loopVideo) {
   loopVideo.addEventListener("playing", keepBgmPlaying);
 }
 
 intro.addEventListener("pointerup", openEnvelope);
+
 if (skipIntro) {
-  skipIntro.addEventListener("pointerdown", (event) => event.stopPropagation());
-  skipIntro.addEventListener("pointerup", skipToWedding);
-  skipIntro.addEventListener("click", (event) => event.stopPropagation());
+  skipIntro.addEventListener("pointerup", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  });
+  skipIntro.addEventListener("click", skipToWedding);
 }
 
 function paintFoil(ctx, width, height) {
@@ -463,21 +476,25 @@ function setupStoryStack() {
       card.style.zIndex = String(i + 1);
       card.style.opacity = "1";
 
-      if (reducedMotion) {
-        const shown = Math.round(stacked);
-        const y = i <= shown ? 0 : 105;
-        card.style.transform = `translate3d(0, ${y}%, 0) rotate(${tilt})`;
-        return;
-      }
-
       if (i === 0) {
+        card.style.setProperty("--colorize", "1");
         card.style.transform = `translate3d(0, 0, 0) rotate(${tilt})`;
         return;
       }
 
+      if (reducedMotion) {
+        const shown = Math.round(stacked);
+        const arrived = i <= shown;
+        card.style.setProperty("--colorize", arrived ? "1" : "0");
+        card.style.transform = `translate3d(0, ${arrived ? 0 : 110}vh, 0) rotate(${tilt})`;
+        return;
+      }
+
       const local = Math.min(1, Math.max(0, stacked - (i - 1)));
-      const y = (1 - local) * 105;
-      card.style.transform = `translate3d(0, ${y}%, 0) rotate(${tilt})`;
+      const rise = 1 - Math.pow(1 - local, 1.35);
+      const y = (1 - rise) * 110;
+      card.style.setProperty("--colorize", String(local));
+      card.style.transform = `translate3d(0, ${y}vh, 0) rotate(${tilt})`;
     });
 
     if (hint) {
@@ -535,7 +552,6 @@ const THEME_CLASSES = [
   "theme-haldi",
   "theme-serabandhi",
   "theme-barat",
-  "theme-jaimala",
   "theme-vows",
 ];
 
@@ -546,7 +562,6 @@ const THEME_COLORS = {
   haldi: "#3d2c0a",
   serabandhi: "#3a1219",
   barat: "#4a1612",
-  jaimala: "#3a1224",
   vows: "#16121f",
 };
 
