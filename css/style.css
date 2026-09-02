@@ -743,6 +743,18 @@ body.theme-barat {
   --maroon-deep: #6b2418;
 }
 
+html.theme-jaimala,
+body.theme-jaimala {
+  --midnight: #3a1224;
+  --royal: #7a2d4a;
+  --parchment: #3a1224;
+  --parchment-deep: #4e1830;
+  --dusk: #3a1224;
+  --dusk-deep: #240b16;
+  --dusk-mid: #6b2440;
+  --maroon-deep: #5c1e38;
+}
+
 html.theme-vows,
 body.theme-vows {
   --midnight: #16121f;

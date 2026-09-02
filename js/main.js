@@ -492,6 +492,7 @@ const THEME_CLASSES = [
   "theme-haldi",
   "theme-serabandhi",
   "theme-barat",
+  "theme-jaimala",
   "theme-vows",
 ];
 
@@ -502,6 +503,7 @@ const THEME_COLORS = {
   haldi: "#3d2c0a",
   serabandhi: "#3a1219",
   barat: "#4a1612",
+  jaimala: "#3a1224",
   vows: "#16121f",
 };
 
