@@ -347,7 +347,7 @@ function startSilverShower() {
   showerCanvas.classList.add("is-on");
 
   const silvers = ["#f7efe5", "#fff9f1", "#d8bd7a", "#c6a15b", "#e6cbc5", "#d9b5b0"];
-  const count = reducedMotion ? 40 : 160;
+  const count = reducedMotion ? 70 : 340;
   const particles = [];
 
   function spawn(burst) {
@@ -369,17 +369,17 @@ function startSilverShower() {
   for (let i = 0; i < count; i += 1) spawn(true);
 
   const startedAt = performance.now();
-  const spawnUntil = 2200;
-  const endAt = 5200;
+  const spawnUntil = 2800;
+  const endAt = 5600;
   let lastSpawn = 0;
 
   function frame(now) {
     const elapsed = now - startedAt;
     ctx.clearRect(0, 0, width, height);
 
-    if (elapsed < spawnUntil && now - lastSpawn > 40) {
+    if (elapsed < spawnUntil && now - lastSpawn > 26) {
       lastSpawn = now;
-      const extra = reducedMotion ? 1 : 4;
+      const extra = reducedMotion ? 2 : 9;
       for (let i = 0; i < extra; i += 1) spawn(false);
     }
 
@@ -474,13 +474,16 @@ function setupStoryStack() {
     const stacked = progress * last;
 
     cards.forEach((card, i) => {
-      const tilt = getComputedStyle(card).getPropertyValue("--tilt").trim() || "0deg";
+      const styles = getComputedStyle(card);
+      const tilt = styles.getPropertyValue("--tilt").trim() || "0deg";
+      const restX = styles.getPropertyValue("--rest-x").trim() || "0%";
+      const restY = styles.getPropertyValue("--rest-y").trim() || "0%";
       card.style.zIndex = String(i + 1);
       card.style.opacity = "1";
 
       if (i === 0) {
         card.style.setProperty("--colorize", "1");
-        card.style.transform = `translate3d(0, 0, 0) rotate(${tilt})`;
+        card.style.transform = `translate3d(${restX}, ${restY}, 0) rotate(${tilt})`;
         return;
       }
 
@@ -488,15 +491,19 @@ function setupStoryStack() {
         const shown = Math.round(stacked);
         const arrived = i <= shown;
         card.style.setProperty("--colorize", arrived ? "1" : "0");
-        card.style.transform = `translate3d(0, ${arrived ? 0 : 110}vh, 0) rotate(${tilt})`;
+        card.style.transform = arrived
+          ? `translate3d(${restX}, ${restY}, 0) rotate(${tilt})`
+          : `translate3d(0, 110vh, 0) rotate(${tilt})`;
         return;
       }
 
       const local = Math.min(1, Math.max(0, stacked - (i - 1)));
       const rise = 1 - Math.pow(1 - local, 1.35);
-      const y = (1 - rise) * 110;
+      const restXNum = parseFloat(restX) || 0;
+      const restYNum = parseFloat(restY) || 0;
+      const x = rise * restXNum;
       card.style.setProperty("--colorize", String(local));
-      card.style.transform = `translate3d(0, ${y}vh, 0) rotate(${tilt})`;
+      card.style.transform = `translate3d(${x}%, calc(${(1 - rise) * 110}vh + ${rise * restYNum}%), 0) rotate(${tilt})`;
     });
 
     if (hint) {
@@ -566,9 +573,7 @@ const THEME_CLASSES = [
   "theme-haldi",
   "theme-serabandhi",
   "theme-barat",
-  "theme-jaimala",
   "theme-vows",
-  "theme-stay",
   "theme-blessing",
 ];
 
@@ -579,9 +584,7 @@ const THEME_COLORS = {
   haldi: "#3d2c0a",
   serabandhi: "#3a1219",
   barat: "#4a1612",
-  jaimala: "#3a1224",
   vows: "#16121f",
-  stay: "#1a1712",
   blessing: "#140f0c",
 };
 

@@ -621,7 +621,7 @@ body.locked {
   display: flex;
   flex-direction: column;
   background: var(--ivory-soft);
-  padding: 0.5rem 0.5rem 1.15rem;
+  padding: 0.48rem 0.48rem 3.45rem;
   box-shadow:
     0 1px 0 rgba(255, 249, 241, 0.45) inset,
     0 18px 36px rgba(5, 10, 22, 0.45);
@@ -649,7 +649,7 @@ body.locked {
 .polaroid::after {
   content: "";
   position: absolute;
-  inset: 0.5rem 0.5rem 1.15rem;
+  inset: 0.48rem 0.48rem 3.45rem;
   pointer-events: none;
   background:
     linear-gradient(
@@ -663,21 +663,29 @@ body.locked {
 }
 
 .polaroid--1 {
-  --tilt: -1.4deg;
+  --tilt: -3.2deg;
+  --rest-x: -2.5%;
+  --rest-y: 1.5%;
   --colorize: 1;
-  transform: translate3d(0, 0, 0) rotate(-1.4deg);
+  transform: translate3d(-2.5%, 1.5%, 0) rotate(-3.2deg);
 }
 
 .polaroid--2 {
-  --tilt: 1.1deg;
+  --tilt: 4.8deg;
+  --rest-x: 3.5%;
+  --rest-y: -1.5%;
 }
 
 .polaroid--3 {
-  --tilt: -0.9deg;
+  --tilt: -5.4deg;
+  --rest-x: -3%;
+  --rest-y: 2.5%;
 }
 
 .polaroid--4 {
-  --tilt: 1deg;
+  --tilt: 3.8deg;
+  --rest-x: 2%;
+  --rest-y: 1%;
 }
 
 .story__hint {
