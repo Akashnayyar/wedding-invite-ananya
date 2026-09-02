@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Great+Vibes&family=Tiro+Devanagari+Hindi:ital@0;1&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
@@ -47,6 +47,7 @@
         </video>
         <audio id="bgm" src="assets/bgm-new.mp3" loop preload="auto" playsinline></audio>
         <audio id="wedding-song" src="assets/wedding-song.mp3" loop preload="auto" playsinline></audio>
+        <audio id="ganesh-song" src="assets/ganeshay-namah.mp3" loop preload="auto" playsinline></audio>
         <button type="button" id="skip-intro" class="skip-intro">
           Skip to main content
         </button>
@@ -187,6 +188,21 @@
           <p class="ceremony__venue">At Home</p>
           <p class="ceremony__place">212-A, pushp puneet villa, maruti estate, agra - 282010</p>
         </div>
+        <a
+          class="ceremony__map"
+          href="https://maps.app.goo.gl/n7gJqzEXvaVdcYqPA"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <iframe
+            title="Map to home, Pushp Puneet Villa"
+            tabindex="-1"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://maps.google.com/maps?q=27.1839719,77.9716118&z=16&hl=en&output=embed"
+          ></iframe>
+          <span class="ceremony__map-label">Directions</span>
+        </a>
       </section>
       
       <section class="ceremony" id="mehendi" data-theme="mehendi">
@@ -215,6 +231,21 @@
           <p class="ceremony__venue">At Home</p>
           <p class="ceremony__place">212-A, pushp puneet villa, maruti estate, agra - 282010</p>
         </div>
+        <a
+          class="ceremony__map"
+          href="https://maps.app.goo.gl/n7gJqzEXvaVdcYqPA"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <iframe
+            title="Map to home, Pushp Puneet Villa"
+            tabindex="-1"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://maps.google.com/maps?q=27.1839719,77.9716118&z=16&hl=en&output=embed"
+          ></iframe>
+          <span class="ceremony__map-label">Directions</span>
+        </a>
       </section>
 
       <section class="ceremony" id="ring" data-theme="ring">
@@ -302,7 +333,7 @@
         </a>
       </section>
 
-      <section class="ceremony ceremony--last" id="vows" data-theme="vows">
+      <section class="ceremony" id="vows" data-theme="vows">
         <p class="ceremony__eyebrow">The Wedding</p>
         <h2 class="ceremony__title">Vows</h2>
         <figure class="ceremony__media">
@@ -343,6 +374,59 @@
           <span class="ceremony__map-label">Directions</span>
         </a>
       </section>
+
+      <section class="ceremony stay ceremony--last" id="stay" data-theme="stay">
+        <p class="ceremony__eyebrow">For our guests</p>
+        <h2 class="ceremony__title">Guest Stay</h2>
+        <div class="ceremony__details">
+          <p class="ceremony__kind">Accommodation</p>
+          <p class="ceremony__venue">Hotel Elvilla</p>
+        </div>
+        <a
+          class="ceremony__map"
+          href="https://maps.app.goo.gl/yfvpMGYLAY1yTy1s8"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <iframe
+            title="Map to Hotel Elvilla"
+            tabindex="-1"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://maps.google.com/maps?q=28.6391765,77.1145288&z=16&hl=en&output=embed"
+          ></iframe>
+          <span class="ceremony__map-label">Directions</span>
+        </a>
+      </section>
+
+      <section class="blessing" id="blessing" data-theme="blessing">
+        <div class="blessing__glow" aria-hidden="true"></div>
+        <div class="blessing__mandala" aria-hidden="true"></div>
+        <div class="blessing__inner">
+          <p class="blessing__kicker">With folded hands</p>
+          <p class="blessing__om" aria-hidden="true">ॐ</p>
+          <h2 class="blessing__mantra" lang="hi">ॐ गणेशाय नमः</h2>
+          <div class="blessing__sacred" aria-hidden="true">
+            <span></span>
+            <span class="blessing__petal"></span>
+            <span></span>
+          </div>
+          <p class="blessing__prayer">
+            Two hearts, one promise, and a lifetime of togetherness.<br />
+            Join us as they take their first step into forever.<br />
+            Your presence and blessings will make this beautiful beginning<br />
+            truly complete and forever cherished.
+          </p>
+          <p class="blessing__names">Ananya <span>&amp;</span> Shivam</p>
+          <p class="blessing__close">We wait for you, with love</p>
+        </div>
+        <div class="blessing__lamps" aria-hidden="true">
+          <span class="diya"></span>
+          <span class="diya diya--tall"></span>
+          <span class="diya"></span>
+        </div>
+      </section>
+
     </div>
 
     <div id="scroll-hint" class="scroll-hint" aria-hidden="true">

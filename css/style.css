@@ -806,6 +806,18 @@ body.theme-barat {
   --maroon-deep: #6b2418;
 }
 
+html.theme-jaimala,
+body.theme-jaimala {
+  --midnight: #3a1224;
+  --royal: #7a2d4a;
+  --parchment: #3a1224;
+  --parchment-deep: #4e1830;
+  --dusk: #3a1224;
+  --dusk-deep: #240b16;
+  --dusk-mid: #6b2440;
+  --maroon-deep: #5c1e38;
+}
+
 html.theme-vows,
 body.theme-vows {
   --midnight: #16121f;
@@ -816,6 +828,30 @@ body.theme-vows {
   --dusk-deep: #0c0a12;
   --dusk-mid: #2a2438;
   --maroon-deep: #2a2438;
+}
+
+html.theme-stay,
+body.theme-stay {
+  --midnight: #1a1712;
+  --royal: #5a4630;
+  --parchment: #1a1712;
+  --parchment-deep: #2a241c;
+  --dusk: #1a1712;
+  --dusk-deep: #0e0c0a;
+  --dusk-mid: #4a3a28;
+  --maroon-deep: #3d3224;
+}
+
+html.theme-blessing,
+body.theme-blessing {
+  --midnight: #140f0c;
+  --royal: #3d2714;
+  --parchment: #140f0c;
+  --parchment-deep: #24180f;
+  --dusk: #140f0c;
+  --dusk-deep: #0a0806;
+  --dusk-mid: #3a2714;
+  --maroon-deep: #4a2c14;
 }
 
 body.theme-festive .rites::before {
@@ -979,6 +1015,253 @@ body.theme-festive .rites::before {
   outline-offset: 2px;
 }
 
+.stay .ceremony__map {
+  width: min(100%, 19rem);
+  margin-top: 1.35rem;
+}
+
+.stay .ceremony__map iframe {
+  height: 10.5rem;
+}
+
+.blessing {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4.2rem 1.4rem calc(3.4rem + env(safe-area-inset-bottom));
+  text-align: center;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 70% 42% at 50% 38%, rgba(198, 161, 91, 0.16), transparent 58%),
+    var(--midnight);
+}
+
+.blessing__glow {
+  position: absolute;
+  inset: 18% 10% 28%;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 50% 45%, rgba(255, 214, 140, 0.18), transparent 62%);
+  filter: blur(8px);
+}
+
+.blessing__mandala {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  z-index: 0;
+  width: min(92vw, 28rem);
+  aspect-ratio: 1;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  opacity: 0.22;
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      rgba(216, 189, 122, 0.28) 0deg 3deg,
+      transparent 3deg 15deg
+    );
+  mask-image: radial-gradient(circle, transparent 28%, #000 42%, #000 58%, transparent 72%);
+  -webkit-mask-image: radial-gradient(circle, transparent 28%, #000 42%, #000 58%, transparent 72%);
+  animation: mandala-spin 90s linear infinite;
+}
+
+.blessing__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 22rem;
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
+}
+
+.blessing.is-visible .blessing__inner {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.blessing__kicker {
+  font-size: 0.58rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  margin-bottom: 1.1rem;
+}
+
+.blessing__om {
+  font-family: "Tiro Devanagari Hindi", "Noto Serif Devanagari", serif;
+  font-size: clamp(4.4rem, 18vw, 6.2rem);
+  line-height: 0.9;
+  color: var(--gold-bright);
+  text-shadow:
+    0 0 18px rgba(216, 189, 122, 0.55),
+    0 0 42px rgba(198, 161, 91, 0.32);
+  animation: om-breathe 4.6s ease-in-out infinite;
+}
+
+.blessing__mantra {
+  margin-top: 0.35rem;
+  font-family: "Tiro Devanagari Hindi", "Noto Serif Devanagari", serif;
+  font-size: clamp(1.55rem, 6.4vw, 2.05rem);
+  font-weight: 400;
+  line-height: 1.45;
+  color: var(--ivory);
+}
+
+.blessing__phonetic {
+  margin-top: 0.35rem;
+  font-size: 0.92rem;
+  font-style: italic;
+  letter-spacing: 0.08em;
+  color: rgba(247, 239, 229, 0.62);
+}
+
+.blessing__sacred {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  margin: 1.25rem 0 1.15rem;
+}
+
+.blessing__sacred span:first-child,
+.blessing__sacred span:last-child {
+  width: 3.6rem;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+.blessing__petal {
+  width: 0.72rem;
+  height: 0.72rem;
+  border-radius: 80% 0 80% 0;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--midnight) 70%, transparent), 0 0 0 4px var(--gold-bright);
+  transform: rotate(45deg);
+}
+
+.blessing__prayer {
+  font-size: 1.02rem;
+  line-height: 1.7;
+  font-style: italic;
+  color: rgba(247, 239, 229, 0.82);
+}
+
+.blessing__names {
+  margin-top: 1.35rem;
+  font-family: "Great Vibes", cursive;
+  font-size: clamp(2.2rem, 10vw, 3rem);
+  color: var(--ivory);
+}
+
+.blessing__names span {
+  display: inline-block;
+  margin: 0 0.2rem;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 0.72em;
+  font-style: italic;
+  color: var(--gold-bright);
+}
+
+.blessing__close {
+  margin-top: 0.45rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(216, 189, 122, 0.78);
+}
+
+.blessing__lamps {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1.6rem;
+  margin-top: 2.4rem;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 1.2s ease 0.25s, transform 1.2s ease 0.25s;
+}
+
+.blessing.is-visible .blessing__lamps {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.diya {
+  position: relative;
+  width: 1.55rem;
+  height: 0.52rem;
+  border-radius: 0 0 1.1rem 1.1rem;
+  background: linear-gradient(180deg, #d8bd7a, #8a4a1a 70%, #5c2e10);
+}
+
+.diya--tall {
+  width: 1.85rem;
+  height: 0.62rem;
+}
+
+.diya::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 92%;
+  width: 0.38rem;
+  height: 0.82rem;
+  border-radius: 50% 50% 45% 45%;
+  background:
+    radial-gradient(circle at 50% 78%, #fff8d6 0 18%, #ffc14d 42%, #e85d04 78%, transparent 82%);
+  transform: translateX(-50%);
+  filter: drop-shadow(0 0 8px rgba(255, 176, 70, 0.7));
+  animation: diya-flame 1.35s ease-in-out infinite;
+}
+
+.diya--tall::before {
+  width: 0.46rem;
+  height: 1.05rem;
+}
+
+@keyframes mandala-spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes om-breathe {
+  0%,
+  100% {
+    text-shadow:
+      0 0 16px rgba(216, 189, 122, 0.42),
+      0 0 34px rgba(198, 161, 91, 0.22);
+    transform: scale(1);
+  }
+  50% {
+    text-shadow:
+      0 0 26px rgba(255, 224, 160, 0.7),
+      0 0 54px rgba(198, 161, 91, 0.4);
+    transform: scale(1.03);
+  }
+}
+
+@keyframes diya-flame {
+  0%,
+  100% {
+    transform: translateX(-50%) scaleY(1) rotate(-3deg);
+    opacity: 0.88;
+  }
+  50% {
+    transform: translateX(-50%) scaleY(1.12) rotate(3deg);
+    opacity: 1;
+  }
+}
+
 .rites__timeline {
   list-style: none;
   max-width: 22.5rem;
@@ -1084,6 +1367,19 @@ body.theme-festive .rites::before {
   }
 
   .rite {
+    transition: none;
+  }
+
+  .blessing__mandala,
+  .blessing__om,
+  .diya::before {
+    animation: none;
+  }
+
+  .blessing__inner,
+  .blessing__lamps {
+    opacity: 1;
+    transform: none;
     transition: none;
   }
 }

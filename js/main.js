@@ -4,6 +4,7 @@ const video = document.getElementById("envelope-video");
 const loopVideo = document.getElementById("loop-video");
 const bgm = document.getElementById("bgm");
 const weddingSong = document.getElementById("wedding-song");
+const ganeshSong = document.getElementById("ganesh-song");
 const welcome = document.getElementById("welcome");
 const skipIntro = document.getElementById("skip-intro");
 const weddingSection = document.getElementById("rites");
@@ -101,6 +102,7 @@ function keepBgmPlaying() {
   if (!started || !bgm || !bgm.paused) return;
   if (document.body.classList.contains("theme-festive") || document.documentElement.classList.contains("theme-festive")) return;
   if (weddingSong && !weddingSong.paused) return;
+  if (ganeshSong && !ganeshSong.paused) return;
   bgm.play().catch(() => {});
 }
 
@@ -529,21 +531,33 @@ function fadeVolume(audio, from, to, ms) {
   });
 }
 
-async function crossfadeToWeddingSong() {
-  if (!weddingSong) return;
-  if (!weddingSong.paused && weddingSong.volume > 0.1) return;
-  weddingSong.currentTime = 0;
-  weddingSong.volume = 0;
+async function crossfadeTracks(from, to, toVolume = 0.78) {
+  if (!to) return;
+  if (!to.paused && to.volume > 0.1) return;
+
+  to.currentTime = 0;
+  to.volume = 0;
   try {
-    await weddingSong.play();
+    await to.play();
   } catch {
     return;
   }
+
   await Promise.all([
-    fadeVolume(bgm, bgm ? bgm.volume : 0, 0, 3200),
-    fadeVolume(weddingSong, 0, 0.78, 3800),
+    from ? fadeVolume(from, from.volume || 0, 0, 3200) : Promise.resolve(),
+    fadeVolume(to, 0, toVolume, 3800),
   ]);
-  if (bgm) bgm.pause();
+  if (from) from.pause();
+}
+
+async function crossfadeToWeddingSong() {
+  const from = ganeshSong && !ganeshSong.paused ? ganeshSong : bgm;
+  await crossfadeTracks(from, weddingSong);
+}
+
+async function crossfadeToGaneshSong() {
+  const from = weddingSong && !weddingSong.paused ? weddingSong : bgm;
+  await crossfadeTracks(from, ganeshSong);
 }
 
 const THEME_CLASSES = [
@@ -552,7 +566,10 @@ const THEME_CLASSES = [
   "theme-haldi",
   "theme-serabandhi",
   "theme-barat",
+  "theme-jaimala",
   "theme-vows",
+  "theme-stay",
+  "theme-blessing",
 ];
 
 const THEME_COLORS = {
@@ -562,7 +579,10 @@ const THEME_COLORS = {
   haldi: "#3d2c0a",
   serabandhi: "#3a1219",
   barat: "#4a1612",
+  jaimala: "#3a1224",
   vows: "#16121f",
+  stay: "#1a1712",
+  blessing: "#140f0c",
 };
 
 function setupRites() {
@@ -572,6 +592,7 @@ function setupRites() {
 
   let currentTheme = "night";
   let celebrated = false;
+  let blessed = false;
   let ticking = false;
 
   function playSceneVideo(name) {
@@ -611,9 +632,18 @@ function setupRites() {
       THEME_COLORS[name] || THEME_COLORS.night
     );
 
-    if (name !== "night" && !celebrated) {
-      celebrated = true;
-      crossfadeToWeddingSong();
+    if (name === "blessing") {
+      blessed = true;
+      crossfadeToGaneshSong();
+    } else if (name !== "night") {
+      if (blessed) {
+        blessed = false;
+        celebrated = true;
+        crossfadeToWeddingSong();
+      } else if (!celebrated) {
+        celebrated = true;
+        crossfadeToWeddingSong();
+      }
     }
 
     playSceneVideo(name);
@@ -653,3 +683,24 @@ function setupRites() {
 }
 
 setupRites();
+
+function setupBlessing() {
+  const blessing = document.getElementById("blessing");
+  if (!blessing) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          blessing.classList.add("is-visible");
+          observer.disconnect();
+        }
+      });
+    },
+    { threshold: 0.28 }
+  );
+
+  observer.observe(blessing);
+}
+
+setupBlessing();
